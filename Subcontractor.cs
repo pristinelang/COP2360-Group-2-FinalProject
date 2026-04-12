@@ -70,8 +70,6 @@ namespace FinalProject
         public float ComputePay(double hoursWorked)
         {
             // TODO (Person 3): implement this
-            // Hint: effective rate = hourlyPayRate * (1 + NightShiftDifferential) for night shift
-            throw new NotImplementedException("Person 3: implement ComputePay()");
         }
 
         // Utility
