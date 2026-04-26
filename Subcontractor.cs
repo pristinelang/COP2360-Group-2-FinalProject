@@ -2,83 +2,66 @@ using System;
 
 namespace FinalProject
 {
-    /// <summary>
-    /// Represents a subcontractor. Inherits from Contractor.
-    /// Person 3 owns this file — implement ComputePay() to finish.
-    /// </summary>
     public class Subcontractor : Contractor
     {
-        // Private Fields
-        private int    shift;         // 1 = day, 2 = night
+        private int shift; // 1 = day, 2 = night
         private double hourlyPayRate;
+        private string certificateNumber; // Added new field
 
-        // Night-shift differential (3%)
         private const double NightShiftDifferential = 0.03;
 
-        // Constructors
-
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
         public Subcontractor() : base()
         {
-            shift         = 1;
+            shift = 1;
             hourlyPayRate = 0.0;
+            certificateNumber = "Pending";
         }
 
-        /// <summary>
-        /// Parameterized constructor.
-        /// </summary>
         public Subcontractor(string name, string contractorNumber, DateTime startDate,
-                             int shift, double hourlyPayRate)
+                             int shift, double hourlyPayRate, string certificateNumber)
             : base(name, contractorNumber, startDate)
         {
-            this.shift         = shift;
+            this.shift = shift;
             this.hourlyPayRate = hourlyPayRate;
+            this.certificateNumber = certificateNumber;
         }
 
         // Accessors
-
-        public int    GetShift()         => shift;
+        public int GetShift() => shift;
         public double GetHourlyPayRate() => hourlyPayRate;
-        public string GetShiftName()     => shift == 1 ? "Day" : "Night";
+        public string GetShiftName() => shift == 1 ? "Day" : "Night";
+        public string GetCertificateNumber() => certificateNumber;
 
         // Mutators
-
         public void SetShift(int value)
         {
-            if (value == 1 || value == 2)
-                shift = value;
-            else
-                Console.WriteLine("Invalid shift. Use 1 (day) or 2 (night).");
+            if (value == 1 || value == 2) shift = value;
         }
 
-        public void SetHourlyPayRate(double value)
-        {
-            if (value >= 0)
-                hourlyPayRate = value;
-        }
-
-        // Core Method
+        public void SetCertificateNumber(string value) => certificateNumber = value;
 
         /// <summary>
-        /// Computes gross pay for the given number of hours worked.
-        /// Night shift employees receive a 3% differential on top of their hourly rate.
+        /// Computes gross pay with a 3% shift differential for night shift.
         /// </summary>
-        /// <param name="hoursWorked">Number of hours worked in the pay period.</param>
-        /// <returns>Gross pay as a float.</returns>
         public float ComputePay(double hoursWorked)
         {
-            // TODO (Person 3): implement this
-        }
+            double basePay = hoursWorked * hourlyPayRate;
 
-        // Utility
+            if (shift == 2)
+            {
+                // Apply 3% differential: (Rate * 1.03) * hours
+                basePay += (basePay * NightShiftDifferential);
+            }
+
+            return (float)basePay;
+        }
 
         public override string ToString()
         {
             return base.ToString() + "\n" +
                    $"Shift: {GetShiftName()} ({shift})\n" +
-                   $"Pay Rate: ${hourlyPayRate:F2}/hr";
+                   $"Pay Rate: ${hourlyPayRate:F2}/hr\n" +
+                   $"Cert #: {certificateNumber}";
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace FinalProject
 {
     /// <summary>
-    /// Christine will update this file 
     /// Adds in subcontractor management 
     /// </summary>
     class Program
@@ -58,9 +57,15 @@ namespace FinalProject
                     Console.WriteLine("Invalid pay rate. Please enter a positive number.");
                 }
 
+                // Certificate number
+                Console.Write("Enter certificate number (or press Enter to leave as Pending): ");
+                string certificateNumber = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(certificateNumber))
+                    certificateNumber = "Pending";
+                
                 // Create the subcontractor and add to the list
                 Subcontractor sub = new Subcontractor(name, contractorNumber, startDate,
-                                                      shift, hourlyPayRate);
+                shift, hourlyPayRate, certificateNumber);
                 subcontractors.Add(sub);
 
                 Console.WriteLine("\nSubcontractor added successfully!");
